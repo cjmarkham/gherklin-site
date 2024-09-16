@@ -3,108 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gherklin - A linter for Gherkin</title>
-    <meta name="description" content="An extensible linter for the gherkin syntax, powered by ESM and TypeScript">
-    <meta name="keywords" content="npm, package, javascript, typescript, development, workflow, productivity linter, gherkin, cucumber, ESM">
-    <link rel="canonical" href="https://www.gherklin.com">
+    <title>Gherklin</title>
 
+    <meta name="description" content="An extensible linter for the gherkin syntax, powered by ESM and TypeScript.">
+    <meta name="keywords" content="Node.js, NPM package, TypeScript, JavaScript, Gherkin, Cucumber, Linter">
+    <meta name="author" content="Your Company Name">
+
+    <link rel="canonical" href="https://www.yourpackagewebsite.com">
     <link rel="stylesheet" href="stylesheet.css">
-
-    <!-- JSON-LD for structured data -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "gherklin",
-            "applicationCategory": "DeveloperApplication",
-            "operatingSystem": "Any",
-            "description": "An extensible linter for the gherkin syntax, powered by ESM and TypeScript"
-        }
-    </script>
 </head>
 <body>
 <header>
-    <nav class="container">
-        <div class="logo-container">
-            <div class="logo-image" aria-hidden="true">
-                <img src="images/gherkie.png" alt="Gherkie">
-            </div>
-            <a href="#" class="logo-text">Gherklin</a>
+    <div class="container">
+        <div class="logo">
+            Gherklin
         </div>
-        <div class="nav-links" id="nav-links">
-            <a href="#features">Features</a>
-            <a href="#example-code">Examples</a>
-            <a href="#installation">Installation</a>
-            <a target="_blank" href="https://github.com/cjmarkham/gherklin">GitHub</a>
-        </div>
-    </nav>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#install">Install</a></li>
+                <li><a target="_blank" href="https://github.com/cjmarkham/gherklin">Documentation</a></li>
+                <li><a target="_blank" href="https://github.com/cjmarkham/gherklin">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <main>
     <section class="hero">
         <div class="container">
-            <h1>Gherklin</h1>
-            <p>An extensible linter for the gherkin syntax, powered by ESM and TypeScript</p>
-            <a target="_blank" href="https://github.com/cjmarkham/gherklin" class="btn">Get Started</a>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Always clean your Gherkin</h1>
+                    <p>Use Gherklin. The number 1 brand of Gherkin cleaner, recommended by Gherkin washers everywhere.</p>
+                    <a href="#install" class="cta-button">Get Started</a>
+                </div>
+                <div class="hero-image">
+                    <img src="images/gherkie.png" alt="Gherkie">
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="features" class="features">
         <div class="container">
             <h2>Features</h2>
-            <div class="feature-grid">
-                <div class="feature">
-                    <h3>Extensible</h3>
-                    <p>Easily extend Gherklin by adding your own set of rules.</p>
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Enhanced Reporting</h3>
+                    <p>Reporting is available as either STDOUT or HTML.</p>
+                    <p>See at a glance what the error was, which file it was found in, and the severity.</p>
                 </div>
-                <div class="feature">
-                    <h3>Easy to Use</h3>
-                    <p>Run either via the API or CLI and configure Gherklin with one file.</p>
+                <div class="feature-image">
+                    <img src="images/stdout-report.png" alt="Easy Integration Illustration">
                 </div>
-                <div class="feature">
-                    <h3>Reporting</h3>
-                    <p>With built in reporters, you can get your results whichever way you want them.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Customize Rules</h3>
+                    <p>You can customize each rule in granular detail.</p>
+                    <p>Specify whether the rule is enabled or not, what severity the rule is, and any arguments if they are supported by the rule.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="images/config-example.png" alt="Lightning Fast Performance Illustration">
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Custom Rules</h3>
+                    <p>Create your own custom rules for your project.</p>
+                    <p>If Gherklin doesn't meet your specific project's needs, you can create custom rules and configure them the same way as the built-in rules.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="images/rule-example.png" alt="Secure by Default Illustration">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="example-code" class="example-code">
+    <section id="install" class="install">
         <div class="container">
-            <h2>Examples</h2>
-            <div class="code-grid">
-                <div>
-                    <h3>See the issues</h3>
-                    <p>
-                        The STDOUT reporter shows you all of the issues Gherklin saw while evaluating your feature files.
-                        It gives you a clear and concise view of the file, the severity of the issue, a short description of the issue and the rule.
-                    </p>
-
-                    <h3>Customize the rules</h3>
-                    <p>
-                        Gherklin allows you to customize each rule to meet your specific needs. You can turn rules off completely, set specific arguments
-                        for rules that allow them, and specify a severity for each rule.
-                    </p>
-
-                    <h3>Add new rules</h3>
-                    <p>
-                        If Gherklin doesn't quite hit your needs, you can extend it with custom rules. These custom rules allow the same fine tuned configuration
-                        as built in ones.
-                    </p>
-                </div>
-                <div class="code-image">
-                    <img src="images/stdout-report.png" alt="stdout report" height="350">
-                </div>
+            <h2>Quick Installation</h2>
+            <div class="install-code">
+                npm install gherklin
             </div>
-        </div>
-    </section>
-
-    <section id="installation" class="installation">
-        <div class="container">
-            <h2>Installation</h2>
-            <pre><code>npm install gherklin</code></pre>
-            <p>or</p>
-            <pre><code>yarn add gherklin</code></pre>
+            <div class="install-code">
+                yarn add gherklin
+            </div>
+            <p>It's that simple! Get started with Gherklin in seconds.</p>
         </div>
     </section>
 </main>
@@ -112,10 +98,18 @@
 <footer>
     <div class="container">
         <p>&copy; 2024 Gherklin. All rights reserved.</p>
-        <div>
-            <a href="https://github.com/cjmarkham/gherklin">Github</a>
-        </div>
     </div>
 </footer>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Gherklin",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Node.js",
+        "description": "An extensible linter for the gherkin syntax, powered by ESM and TypeScript."
+    }
+</script>
 </body>
 </html>
