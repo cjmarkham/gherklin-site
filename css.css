@@ -52,6 +52,10 @@ header .container {
     animation: slideInFromLeft 0.5s ease-out;
 }
 
+.logo img {
+    margin-right: 1rem;
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
