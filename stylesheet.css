@@ -252,22 +252,16 @@ footer {
     font-size: 14px;
 }
 
+@media (max-width: 1000px) {
+    .hero img {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     header {
         flex-direction: column;
         align-items: flex-start;
-    }
-
-    nav {
-        margin-top: 20px;
-    }
-
-    nav ul {
-        flex-direction: column;
-    }
-
-    nav ul li {
-        margin: 10px 0;
     }
 
     .hero-container {
