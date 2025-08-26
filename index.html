@@ -1,116 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gherklin</title>
-
-    <meta name="description" content="An extensible linter for the gherkin syntax, powered by ESM and TypeScript.">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gherklin &bull; Modern Gherkin Linter</title>
+    <meta name="description" content="Gherklin is a modern, extensible linter for Gherkin syntax with custom rules, automatic fixing, and beautiful HTML reports. Built with TypeScript & ESM." />
     <meta name="keywords" content="Node.js, NPM package, TypeScript, JavaScript, Gherkin, Cucumber, Linter">
 
-    <link rel="canonical" href="https://www.yourpackagewebsite.com">
-    <link rel="stylesheet" href="css.css?v=1">
-    <link rel="icon" type="image/x-icon" href="images/logo.png">
+    <link rel="stylesheet" href="css.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-<header>
-    <div class="container">
-        <div class="logo">
-            <img src="images/logo.png" alt="Gherklin" width="25" height="25">
+
+<!-- NAV -->
+<header class="nav">
+    <div class="container nav-inner">
+        <div class="brand">
+            <svg viewBox="0 0 200 200" width="50" height="50" role="img" aria-label="Gherklin logo"
+                 xmlns="http://www.w3.org/2000/svg">
+                <title>Gherklin</title>
+                <defs>
+                    <linearGradient id="gel" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%"  stop-color="var(--info, #39d2ff)"/>
+                        <stop offset="100%" stop-color="var(--accent, #00e5ff)"/>
+                    </linearGradient>
+                    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="var(--info, #39d2ff)" flood-opacity=".35"/>
+                        <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="var(--accent, #00e5ff)" flood-opacity=".18"/>
+                    </filter>
+                </defs>
+
+                <circle cx="100" cy="100" r="84"
+                        fill="none"
+                        stroke="url(#gel)" stroke-width="3"
+                        stroke-dasharray="8 6"
+                        opacity=".9"/>
+
+                <g filter="url(#glow)">
+                    <rect x="60" y="28" width="80" height="144" rx="40"
+                          fill="none" stroke="url(#gel)" stroke-width="10"/>
+                    <!-- inner sheen -->
+                    <rect x="68" y="36" width="64" height="128" rx="32"
+                          fill="none" stroke="var(--chip, #1a1f29)" stroke-opacity=".6" stroke-width="2"/>
+                </g>
+
+                <path d="M78 112 L96 130 L140 80"
+                      fill="none"
+                      stroke="var(--ok, #1fd1a5)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"
+                      filter="url(#glow)"/>
+
+                <g stroke="var(--border, rgba(0,208,255,.28))" opacity=".5">
+                    <line x1="88" y1="70" x2="88" y2="86"/>
+                    <line x1="112" y1="60" x2="112" y2="76"/>
+                    <line x1="100" y1="92" x2="100" y2="108"/>
+                </g>
+            </svg>
             Gherklin
+            <span class="badge">TypeScript · ESM</span>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#install">Install</a></li>
-                <li><a target="_blank" href="https://github.com/cjmarkham/gherklin">Documentation</a></li>
-                <li><a target="_blank" href="https://github.com/cjmarkham/gherklin">GitHub</a></li>
-            </ul>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="#features">Features</a>
+            <a href="#demo">Report</a>
+            <a href="#install">Install</a>
+            <a href="#rules">Rules</a>
+            <a class="btn ghost" href="https://github.com/cjmarkham/Gherklin" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
     </div>
 </header>
 
-<main>
+<main class="container">
+    <!-- HERO -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1>Always clean your Gherkin</h1>
-                    <p>Use Gherklin. The number 1 brand of Gherkin cleaner, recommended by Gherkin washers everywhere.</p>
-                    <a href="#install" class="cta-button">Get Started</a>
+        <div>
+            <h1>Always clean your&nbsp;Gherkin.</h1>
+            <p>A modern, extensible linter for Gherkin syntax — custom rules, automatic fixing, and beautiful HTML reports. CI-friendly. Fast. Strict where it matters.</p>
+            <div class="cta">
+                <a class="btn" href="#install" aria-label="Get started">Get started</a>
+                <a class="btn ghost" href="https://www.npmjs.com/package/gherklin" target="_blank" rel="noreferrer" aria-label="View on npm">npm</a>
+                <a class="btn ghost" href="https://github.com/cjmarkham/Gherklin" target="_blank" rel="noreferrer" aria-label="View on GitHub">GitHub</a>
+            </div>
+            <div class="badges">
+                <span class="badge">Node 22.x / 24.x</span>
+                <span class="badge">Custom rules via Zod</span>
+                <span class="badge">Reporters: HTML / JSON / STDOUT</span>
+            </div>
+        </div>
+
+        <!-- Report preview -->
+        <div class="panel">
+            <h3 style="margin:0 0 10px; color:var(--subtle); letter-spacing:.3px; text-transform:uppercase;">HTML Report Preview</h3>
+            <div class="demo">
+                <!-- Donut (tiny JS computes dashes) -->
+                <div>
+                    <!-- Two-segment donut: ERR + WARN -->
+                    <svg id="donut" viewBox="0 0 140 140" width="100%" height="180"
+                         role="img" aria-label="Severity donut chart"
+                         data-error="8" data-warn="14">
+                        <g transform="translate(70 70) rotate(-90)">
+                            <!-- base ring -->
+                            <circle r="42" fill="none" stroke="var(--chip)" stroke-width="18"></circle>
+                            <!-- segments -->
+                            <circle class="s-err"  r="42" fill="none"
+                                    style="stroke: var(--err);  stroke-width: 18px; stroke-linecap: butt;"></circle>
+                            <circle class="s-warn" r="42" fill="none"
+                                    style="stroke: var(--warn); stroke-width: 18px; stroke-linecap: butt;"></circle>
+                        </g>
+                        <text id="donutTotal" x="70" y="74" text-anchor="middle" font-size="18" font-weight="700" fill="var(--text)"></text>
+                        <text x="70" y="94" text-anchor="middle" font-size="10" fill="var(--muted)">issues</text>
+                    </svg>
+
+                    <div class="legend" aria-hidden="true">
+                        <span><span class="dot" style="background:var(--err)"></span>Errors</span>
+                        <span><span class="dot" style="background:var(--warn)"></span>Warnings</span>
+                    </div>
                 </div>
-                <div class="hero-image">
-                    <img src="images/gherkie.png" alt="Gherkie">
+
+                <!-- Top rules sketch -->
+                <div>
+                    <div class="bars">
+                        <div class="bar"><div class="bar-label" title="no-trailing-spaces">no-trailing-spaces</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-value">23</div></div>
+                        <div class="bar"><div class="bar-label" title="aligned-datatables">aligned-datatables</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-value">17</div></div>
+                        <div class="bar"><div class="bar-label" title="indentation">indentation</div><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><div class="bar-value">9</div></div>
+                        <div class="bar"><div class="bar-label" title="allowed-tags">allowed-tags</div><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div><div class="bar-value">7</div></div>
+                    </div>
+                    <p class="sub" style="margin-top:8px">Top rule occurrences from a recent run.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="features" class="features">
-        <div class="container">
-            <h2>Features</h2>
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="head">
+            <div>
+                <h2>What Gherklin does</h2>
+                <p class="sub">Lint, fix, and report on Gherkin feature quality — locally or in CI.</p>
+            </div>
+            <a class="btn" href="#install">Install</a>
+        </div>
+
+        <div class="features">
             <div class="feature">
-                <div class="feature-content">
-                    <h3>Enhanced Reporting</h3>
-                    <p>Reporting is available as either STDOUT or HTML.</p>
-                    <p>See at a glance what the error was, which file it was found in, and the severity.</p>
-                </div>
-                <div class="feature-image">
-                    <img src="images/stdout-report.png" alt="Easy Integration Illustration">
-                </div>
+                <h3>Automatic Fixing</h3>
+                <p>Whitespace & formatting issues (like trailing spaces, missing newline at EOF) can be fixed automatically before rules run.</p>
             </div>
             <div class="feature">
-                <div class="feature-content">
-                    <h3>Customize Rules</h3>
-                    <p>You can customize each rule in granular detail.</p>
-                    <p>Specify whether the rule is enabled or not, what severity the rule is, and any arguments if they are supported by the rule.</p>
-                </div>
-                <div class="feature-image">
-                    <img src="images/config-example.png" alt="Lightning Fast Performance Illustration">
-                </div>
+                <h3>Extensible Rules</h3>
+                <p>Write custom rules in TypeScript; validate config with Zod; ship team conventions easily.</p>
             </div>
             <div class="feature">
-                <div class="feature-content">
-                    <h3>Custom Rules</h3>
-                    <p>Create your own custom rules for your project.</p>
-                    <p>If Gherklin doesn't meet your specific project's needs, you can create custom rules and configure them the same way as the built-in rules.</p>
+                <h3>Rich HTML Reports</h3>
+                <p>Zero-dependency, static HTML artefacts with severity charts, top rules, filters by severity & file.</p>
+            </div>
+            <div class="feature">
+                <h3>CI-Friendly</h3>
+                <p>Deterministic output, exit codes on failure, JSON reporter for machine parsing, HTML for humans.</p>
+            </div>
+            <div class="feature">
+                <h3>Typed API</h3>
+                <p>Use the <code>Runner</code> programmatically to integrate deeply with your toolchain.</p>
+            </div>
+            <div class="feature">
+                <h3>Fast & Modern</h3>
+                <p>Built with TypeScript & ESM, tested on Node 22.x and 24.x.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALL & USAGE -->
+    <section id="install">
+        <div class="head">
+            <div>
+                <h2>Install & Use</h2>
+                <p class="sub">Two commands and you’re linting.</p>
+            </div>
+        </div>
+
+        <div class="panel" style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+            <div>
+                <h3 style="margin:0 0 8px; color:var(--subtle); letter-spacing:.3px; text-transform:uppercase;">Install</h3>
+                <div class="code">
+                    <button class="btn ghost copy" data-copy="npm i -D gherklin">Copy</button>
+                    <pre>npm i -D gherklin
+# or
+yarn add -D gherklin</pre>
                 </div>
-                <div class="feature-image">
-                    <img src="images/rule-example.png" alt="Secure by Default Illustration">
+
+                <h3 style="margin:14px 0 8px; color:var(--subtle); letter-spacing:.3px; text-transform:uppercase;">Run (CLI)</h3>
+                <div class="code">
+                    <button class="btn ghost copy" data-copy="npx tsx ./node_modules/.bin/gherklin">Copy</button>
+                    <pre>npx tsx ./node_modules/.bin/gherklin</pre>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="margin:0 0 8px; color:var(--subtle); letter-spacing:.3px; text-transform:uppercase;">Config (gherklin.config.ts)</h3>
+                <div class="code">
+                    <button class="btn ghost copy" data-copy='export default {
+  featureDirectory: "./features",
+  customRulesDirectory: "./custom-rules",
+  rules: {
+    "allowed-tags": "off",
+    "no-trailing-spaces": "error",
+    "new-line-at-eof": "error",
+  },
+  fix: true,
+}'>Copy</button>
+                    <pre>export default {
+  featureDirectory: "./features",
+  customRulesDirectory: "./custom-rules",
+  rules: {
+    "allowed-tags": "off",
+    "no-trailing-spaces": "error",
+    "new-line-at-eof": "error",
+  },
+  fix: true,
+}</pre>
+                </div>
+
+                <h3 style="margin:14px 0 8px; color:var(--subtle); letter-spacing:.3px; text-transform:uppercase;">API</h3>
+                <div class="code">
+                    <button class="btn ghost copy" data-copy='import { Runner } from "gherklin";
+
+(async () => {
+  const runner = new Runner();
+  const init = await runner.init();
+  if (!init.success) throw init.schemaErrors;
+
+  const result = await runner.run();
+  if (!result.success) process.exit(1);
+})();'>Copy</button>
+                    <pre>import { Runner } from "gherklin";
+
+(async () => {
+  const runner = new Runner();
+  const init = await runner.init();
+  if (!init.success) throw init.schemaErrors;
+
+  const result = await runner.run();
+  if (!result.success) process.exit(1);
+})();</pre>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="install" class="install">
-        <div class="container">
-            <h2>Quick Installation</h2>
-            <div class="install-code">
-                npm install gherklin
+    <!-- RULES SNAPSHOT -->
+    <section id="rules">
+        <div class="head">
+            <div>
+                <h2>Rules snapshot</h2>
+                <p class="sub">Shipped set covers formatting, structure, consistency, and naming — plus your own custom rules.</p>
             </div>
-            <div class="install-code">
-                yarn add gherklin
-            </div>
-            <p>It's that simple! Get started with Gherklin in seconds.</p>
+            <a class="btn ghost" href="https://github.com/cjmarkham/Gherklin/tree/main/src/rules" target="_blank" rel="noreferrer">See all rules</a>
+        </div>
+        <div class="rules">
+            <div class="rule-card"><h4>Formatting</h4><p><code>no-trailing-spaces</code>, <code>new-line-at-eof</code>, <code>indentation</code>, <code>no-full-stops</code></p></div>
+            <div class="rule-card"><h4>Structure</h4><p><code>keywords-in-logical-order</code>, <code>no-background-only</code>, <code>no-single-example-outline</code></p></div>
+            <div class="rule-card"><h4>Consistency</h4><p><code>no-inconsistent-quotes</code>, <code>no-typographer-quotes</code>, <code>aligned-datatables</code></p></div>
+            <div class="rule-card"><h4>Naming & Uniqueness</h4><p><code>no-unnamed-scenarios</code>, <code>no-dupe-scenarios</code>, <code>no-dupe-features</code></p></div>
         </div>
     </section>
+
+    <!-- CI NOTE -->
+    <section>
+        <div class="panel">
+            <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between">
+                <div>
+                    <h2 style="margin:0">Perfect for CI</h2>
+                    <p class="sub" style="max-width:740px">Emit JSON for machines, HTML for humans. Fail fast with <code>maxErrors</code>, and attach the HTML artefact to your CI run for instant signal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anchor for nav -->
+    <span id="demo" aria-hidden="true"></span>
 </main>
 
 <footer>
-    <div class="container">
-        <p>&copy; 2024 Gherklin. All rights reserved.</p>
-    </div>
+    Made with ❤ by Gherklin · <a href="https://github.com/cjmarkham/Gherklin" target="_blank" rel="noreferrer">Contribute on GitHub</a>
 </footer>
 
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Gherklin",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Node.js",
-        "description": "An extensible linter for the gherkin syntax, powered by ESM and TypeScript."
-    }
+<script>
+  // Copy buttons
+  document.querySelectorAll('.copy').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const text = btn.getAttribute('data-copy') || '';
+      navigator.clipboard.writeText(text).then(()=>{
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(()=>btn.textContent = orig, 1200);
+      });
+    });
+  });
+
+    (function(){
+    const el = document.getElementById('donut');
+    if(!el) return;
+    const err  = Math.max(0, +(el.dataset.error||0));
+    const warn = Math.max(0, +(el.dataset.warn||0));
+    const total = err + warn;
+
+    const r = 42, C = 2*Math.PI*r;
+
+    function seg(circle, value, offset){
+    if(!circle || total<=0 || value<=0) return offset;
+    const frac = value/total, dash = C*frac, gap = C-dash;
+    circle.setAttribute('stroke-dasharray', `${dash.toFixed(2)} ${gap.toFixed(2)}`);
+    circle.setAttribute('stroke-dashoffset', `-${(C*offset).toFixed(2)}`);
+    return offset + frac;
+  }
+
+    let off = 0;
+    off = seg(el.querySelector('.s-err'),  err,  off);
+    off = seg(el.querySelector('.s-warn'), warn, off);
+
+    const label = document.getElementById('donutTotal');
+    if (label) label.textContent = String(total);
+  })();
+
 </script>
 </body>
 </html>
+
